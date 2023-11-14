@@ -1,0 +1,11 @@
+File name: imagine.bmp
+ inaltime: 1920
+ lungime: 1280
+ dimensiune: 7372938 bytes
+ user id: 1000
+ contorul de legatur: 1
+ timpul ultimei modificari: Sat Nov 11 16:16:26 2023
+
+ drepturi de acces user: rw-
+ drepturi de acces grup: r--
+ drepturi de acces other: r--
