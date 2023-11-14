@@ -9,65 +9,78 @@
 #include <time.h>
 #include <dirent.h>
 
-void opendDir(const char *path) {
+int fOut;
+
+void writeInFile(char *buffer)
+{
+  if(write(fOut,buffer,strlen(buffer))==-1)
+      {
+        perror("write in file output error");
+        exit(-1);
+      }
+
+}
+
+void workDir(const char *dirName) {
     DIR *dir;
-    struct dirent *entry;
+    struct dirent *info;
 
-    // Deschide directorul
-    dir = opendir(path);
+    dir = opendir(dirName);
 
-    // Verifică dacă directorul s-a deschis cu succes
+    
     if (dir == NULL) {
         perror("opendir");
         exit(EXIT_FAILURE);
     }
+    
 
-    // Parcurge fiecare intrare din director
-    while ((entry = readdir(dir)) != NULL) {
-        /*
-            if(bmp)
-            {
+    while ((info = readdir(dir)) != NULL) {
+      
+      struct stat fileInfo;
+      stat(info->d_name, &fileInfo);  
+      char buffer[4096];
 
-            }
-            else if(reg file)
-            {
+      if(S_ISREG(fileInfo.st_mode)==0)
+      {
+        if(info->d_type == DT_REG)
+        {
 
-            }
-            else if(simbolic link)
-            {
-                nume legatura: nume
-                dimensiune legatura: dimensiunea legaturii
-                dimensiune fisier dimensiunea fisierului target
-                drepturi de acces user legatura: RWX
-                drepturi de acces grup legatura: R–-
-                drepturi de acces altii legatura: ---   
-            }
-            else if(dir)
-            {
-                nume director: director
-                identificatorul utilizatorului: <user id>
-                drepturi de acces user: RWX
-                drepturi de acces grup: R–-
-                drepturi de acces altii: ---
-            }
-            else()
-            {
-                exit
-            }
-        */
+          sprintf(buffer,"reg file: %s\n",info->d_name);
+          writeInFile(buffer);
+        }
+        else if(info->d_type == DT_DIR)
+        {
+          sprintf(buffer,"dir: %s\n",info->d_name);
+          writeInFile(buffer);
+
+        }
+        else if(info->d_type == DT_LNK)
+        {
+          sprintf(buffer,"link: %s\n",info->d_name);
+          writeInFile(buffer);
+        }
+        else
+        {
+          return;
+        }
+      }
+      
+         
     }
-
+    close(fOut);
     closedir(dir);
 }
 
+/*
+if (strcmp(info->d_name, ".") == 0 || strcmp(info->d_name, "..") == 0) {
+            continue;
+        }
+*/
 
-int main(int argc, char *argv[])
+void verifyInput(int argc, char *argv[])
 {
-    int fIn,fOut;
-    char buffer[BUFSIZ];
-
     struct stat fileInfo;
-    stat(argv[1], &fileInfo);
+    stat(argv[1], &fileInfo);    
 
     
     if (argc != 2 || S_ISDIR(fileInfo.st_mode) == 0)
@@ -76,16 +89,21 @@ int main(int argc, char *argv[])
       exit(-1);
     }
 
-
-    opendDir(argv[1]);
-
-    if( (fOut = open("statistica.txt",O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0 )
+}
+void createOutputFIle()
+{
+  if( (fOut = open("statistica.txt",O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0 )
     {
       perror("output file error \n");
       exit(-1);
     }
+}
+int main(int argc, char *argv[])
+{
+  createOutputFIle();
 
-    close(fIn);
-    close(fOut);
-    return 0;
+  workDir(argv[1]);
+
+  
+  return 0;
 }
