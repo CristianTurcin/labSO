@@ -1,7 +1,39 @@
-dir: director
-reg file: imagine.bmp
-reg file: file1.txt
-link: link
-reg file: file2
-dir: .
-dir: ..
+
+nume director: director
+ user id: 0
+ drepturi de acces user: ---
+ drepturi de acces grup: ---
+ drepturi de acces other: ---
+
+regular file name: file2 
+ dimensiune: 16 bytes
+ user id: 0
+ contorul de legatur: 0
+ timpul ultimei modificari: Tue Nov 14 23:34:02 2023
+ drepturi de acces user: ---
+ drepturi de acces grup: ---
+ drepturi de acces other: ---
+
+BMP File name: imagine 
+ dimensiune: 16 bytes
+ user id: 0
+ contorul de legatur: 0
+ timpul ultimei modificari: Tue Nov 14 23:34:02 2023
+ drepturi de acces user: ---
+ drepturi de acces grup: ---
+ drepturi de acces other: ---
+
+regular file name: file1 
+ dimensiune: 16 bytes
+ user id: 0
+ contorul de legatur: 0
+ timpul ultimei modificari: Tue Nov 14 23:34:02 2023
+ drepturi de acces user: ---
+ drepturi de acces grup: ---
+ drepturi de acces other: ---
+
+Nume legatura: link 
+ dimensiune: 16 bytes
+ drepturi de acces user: ---
+ drepturi de acces grup: ---
+ drepturi de acces other: ---
