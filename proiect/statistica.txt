@@ -1,39 +1,69 @@
 
-nume director: director
- user id: 0
- drepturi de acces user: ---
- drepturi de acces grup: ---
- drepturi de acces other: ---
-
-regular file name: file2 
- dimensiune: 16 bytes
+BMP File name: imagine_1.bmp 
+ heigth: 467 
+ length 467 
+ dimensiune: 0 bytes
  user id: 0
  contorul de legatur: 0
- timpul ultimei modificari: Tue Nov 14 23:34:02 2023
+ timpul ultimei modificari: Thu Jan  1 02:00:00 1970
  drepturi de acces user: ---
  drepturi de acces grup: ---
  drepturi de acces other: ---
 
-BMP File name: imagine 
- dimensiune: 16 bytes
- user id: 0
+BMP File name: imagine_4.bmp 
+ heigth: 762 
+ length 1309 
+ dimensiune: 94362139853579 bytes
+ user id: 21970
  contorul de legatur: 0
- timpul ultimei modificari: Tue Nov 14 23:34:02 2023
- drepturi de acces user: ---
- drepturi de acces grup: ---
- drepturi de acces other: ---
+ timpul ultimei modificari: Thu Jan  1 02:00:00 1970
+ drepturi de acces user: -wx
+ drepturi de acces grup: r--
+ drepturi de acces other: -wx
 
-regular file name: file1 
- dimensiune: 16 bytes
+regular file name: legatura1 
+ dimensiune: 0 bytes
  user id: 0
+ contorul de legatur: 98
+ timpul ultimei modificari: Thu Jan  1 02:00:00 1970
+ drepturi de acces user: rwx
+ drepturi de acces grup: rwx
+ drepturi de acces other: rwx
+
+BMP File name: imagine_2.bmp 
+ heigth: 640 
+ length 426 
+ dimensiune: 94362139853651 bytes
+ user id: 21970
  contorul de legatur: 0
- timpul ultimei modificari: Tue Nov 14 23:34:02 2023
- drepturi de acces user: ---
- drepturi de acces grup: ---
+ timpul ultimei modificari: Thu Jan  1 02:00:00 1970
+ drepturi de acces user: r--
+ drepturi de acces grup: rw-
+ drepturi de acces other: -wx
+
+regular file name: 1.txt 
+ dimensiune: 0 bytes
+ user id: 0
+ contorul de legatur: 98
+ timpul ultimei modificari: Thu Jan  1 02:00:00 1970
+ drepturi de acces user: rwx
+ drepturi de acces grup: rwx
+ drepturi de acces other: r-x
+
+BMP File name: imagine_3.bmp 
+ heigth: 256 
+ length 256 
+ dimensiune: 94362139853771 bytes
+ user id: 21970
+ contorul de legatur: 0
+ timpul ultimei modificari: Thu Jan  1 02:00:00 1970
+ drepturi de acces user: r-x
+ drepturi de acces grup: rwx
+ drepturi de acces other: -wx
+
+nume director: directorTest
+identificatorul utilizatorului: 32765
+drepturi de acces user: r--
+ drepturi de acces grup: r-x
  drepturi de acces other: ---
 
-Nume legatura: link 
- dimensiune: 16 bytes
- drepturi de acces user: ---
- drepturi de acces grup: ---
- drepturi de acces other: ---
