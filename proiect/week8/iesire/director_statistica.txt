@@ -1,0 +1,7 @@
+
+nume director: director
+identificatorul utilizatorului: 32767
+drepturi de acces user: r-x
+ drepturi de acces grup: ---
+ drepturi de acces other: rwx
+

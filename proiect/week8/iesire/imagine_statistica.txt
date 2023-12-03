@@ -1,0 +1,11 @@
+
+BMP File name: imagine.bmp 
+ heigth: 1920 
+ length 1280 
+ dimensiune: 94432810845083 bytes
+ user id: 0
+ contorul de legatur: 0
+ timpul ultimei modificari: Thu Jan  1 02:00:00 1970
+ drepturi de acces user: ---
+ drepturi de acces grup: ---
+ drepturi de acces other: ---

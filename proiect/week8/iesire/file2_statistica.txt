@@ -1,0 +1,9 @@
+
+regular file name: file2.txt 
+ dimensiune: 0 bytes
+ user id: 32767
+ contorul de legatur: 0
+ timpul ultimei modificari: Thu Jan  1 02:00:00 1970
+ drepturi de acces user: r-x
+ drepturi de acces grup: ---
+ drepturi de acces other: rwx
