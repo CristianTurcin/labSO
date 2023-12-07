@@ -11,10 +11,46 @@
 #include <ctype.h>
 #include <dirent.h>
 
-
-int fOut;
 char buffer[4096];
 
+int countLines(char *fileName) {
+    int fIn;
+    if ((fIn = open(fileName,O_RDONLY)) < 0) {
+        perror("Error opening file(countLines funct)");
+        exit(EXIT_FAILURE);
+    }
+
+    int lines = 0;
+    char ch;
+    while (read(fIn, &ch, 1) > 0) {
+        if (ch == '\n') {
+            lines++;
+        }
+    }
+    
+    close(fIn);
+    return lines;
+}
+
+void writeNoOfLinesInFile(char *fileName)
+{
+  int fOut,lines=0;
+  char linesBuff[BUFSIZ];
+  if( (fOut = open("statistica.txt",O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0 )
+    {
+      perror("output file error \n");
+      exit(-1);
+    }
+  lines=countLines(fileName);
+  snprintf(linesBuff,sizeof(linesBuff),"s-au scris %d lini-%s",lines,fileName);
+  if(write(fOut,linesBuff,strlen(linesBuff))==-1)
+      {
+        perror("writing nr of lines in file output error");
+        exit(-1);
+      }
+  close(fOut);
+
+}
 
 void writeInFile(char *buffer, char *fileName, char *dirName)
 {
@@ -41,10 +77,11 @@ void writeInFile(char *buffer, char *fileName, char *dirName)
         perror("write in file output error");
         exit(-1);
       }
+    writeNoOfLinesInFile(pathName);
+    
 
     close(fp);
 }
-
 
 int openFileInDirectory(char *dirName, const char *fileName) {
     
@@ -61,7 +98,7 @@ int openFileInDirectory(char *dirName, const char *fileName) {
   return bmpFile;
 }
 
-void generateBmpStats(char *dirName,struct dirent *info,char *outDir)
+void generateBmpStats(char *dirName,struct dirent *info,struct stat fileInfo,char *outDir)
 {
   int fIn = openFileInDirectory(dirName,info->d_name);
   lseek(fIn,18,SEEK_CUR);
@@ -69,10 +106,7 @@ void generateBmpStats(char *dirName,struct dirent *info,char *outDir)
   read(fIn,&heigth,sizeof(int));
   read(fIn,&length,sizeof(int));
 
-  
 
-  struct stat fileInfo;
-  stat(info->d_name, &fileInfo);
   char *ownerP = (char *)malloc(4 * sizeof(char));
   char *groupP = (char *)malloc(4 * sizeof(char)); 
   char *otherP = (char *)malloc(4 * sizeof(char)); 
@@ -103,10 +137,8 @@ void generateBmpStats(char *dirName,struct dirent *info,char *outDir)
 
 }
 
-void generateRegFileStats(struct dirent *info,char *outDir)
+void generateRegFileStats(struct dirent *info,struct stat fileInfo,char *outDir)
 {
-  struct stat fileInfo;
-  stat(info->d_name, &fileInfo);
   char *ownerP = (char *)malloc(4 * sizeof(char));
     char *groupP = (char *)malloc(4 * sizeof(char)); 
     char *otherP = (char *)malloc(4 * sizeof(char)); 
@@ -135,11 +167,8 @@ void generateRegFileStats(struct dirent *info,char *outDir)
   free(otherP);
 }
 
-void generateLinkStats(struct dirent *info,char *outDir)
+void generateLinkStats(struct dirent *info,struct stat fileInfo,char *outDir)
 {
-  struct stat fileInfo;
-  lstat(info->d_name, &fileInfo);
-    
     char *ownerP = (char *)malloc(4 * sizeof(char));
     char *groupP = (char *)malloc(4 * sizeof(char)); 
     char *otherP = (char *)malloc(4 * sizeof(char)); 
@@ -169,12 +198,8 @@ void generateLinkStats(struct dirent *info,char *outDir)
 
 }
 
-
-
-void generateDirStats(struct dirent *info, char *outDir) {
-    struct stat fileInfo;
-    stat(info->d_name, &fileInfo);
-
+void generateDirStats(struct dirent *info,struct stat fileInfo, char *outDir) {
+   
     char *ownerP = (char *)malloc(4 * sizeof(char));
     char *groupP = (char *)malloc(4 * sizeof(char)); 
     char *otherP = (char *)malloc(4 * sizeof(char)); 
@@ -204,19 +229,21 @@ void generateDirStats(struct dirent *info, char *outDir) {
     free(otherP);
 }
 
-
 void workDir(char *dirName,char *outDir) {
     DIR *dir; 
     struct dirent *info;
     dir = opendir(dirName);
+    char fullpath[4096];
+    pid_t pID;
+
     
     if (dir == NULL) {
         perror("opendir");
         exit(EXIT_FAILURE);
     }
-
+  
     while ((info = readdir(dir)) != NULL) {
-        char fullpath[4096];
+        
         snprintf(fullpath, sizeof(fullpath), "%s/%s", dirName, info->d_name);
 
         struct stat fileInfo;
@@ -225,34 +252,71 @@ void workDir(char *dirName,char *outDir) {
         if (strcmp(info->d_name, ".") == 0 || strcmp(info->d_name, "..") == 0) {
             continue;
         }
+        if((pID = fork()) < 0 )
+        {
+          perror("child process error!");
+          exit(-1);
+        }
 
         if (S_ISREG(fileInfo.st_mode)) {
+          if(pID == 0)
+          {
            if (strstr(info->d_name, ".bmp") != NULL)
           {
-            generateBmpStats(dirName,info,outDir);
-            
+            pid_t pID2;
+            if((pID2 = fork()) < 0 )
+            {
+             perror("fork 2  error!");
+             exit(-1);
+            }
+            if(pID2 == 0)
+            {
+              //convertToGray(info->d_name);
+              exit(EXIT_SUCCESS);
+            }
+            else{
+              int status;
+              wait(&status);
+              printf("GREY: procesul cu pid-ul %d și codul %d” pt %s\n",pID,status, info->d_name);
+            }
+
+            generateBmpStats(dirName,info,fileInfo,outDir);
+            exit(EXIT_SUCCESS);
+          
             
           }
           else
           {
-            
-           generateRegFileStats(info,outDir);
-
+           generateRegFileStats(info,fileInfo,outDir);
+           exit(EXIT_SUCCESS);
+          }
           }
         } else if (S_ISDIR(fileInfo.st_mode)) {
-           generateDirStats(info,outDir);
+          if(pID ==  0)
+           {
+            generateDirStats(info,fileInfo,outDir);
+            exit(EXIT_SUCCESS);
+           }
         } else if (S_ISLNK(fileInfo.st_mode)) {
-            generateLinkStats(info,outDir);
+          if(pID == 0)
+          {
+            generateLinkStats(info,fileInfo,outDir);
+            exit(EXIT_SUCCESS);
+          }
         } else {
             continue;
         }
-        
+      int status;
+      wait(&status);
+      printf("S-a încheiat procesul cu pid-ul %d și codul %d” pt %s\n",pID,status, info->d_name);
+
       
     }
    
 
    closedir(dir); 
 }
+
 void verifyInput(int argc, char *argv[])
 {
   struct stat fileInfo1;
@@ -280,20 +344,11 @@ void verifyInput(int argc, char *argv[])
 
 }
 
-void createOutputFIle()
-{
-  if( (fOut = open("statistica.txt",O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0 )
-    {
-      perror("output file error \n");
-      exit(-1);
-    }
-    close(fOut);
-}
 int main(int argc, char *argv[])
 {
   verifyInput(argc,argv);
 
-  createOutputFIle();
+  
 
   workDir(argv[1],argv[2]);
   

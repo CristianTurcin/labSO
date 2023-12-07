@@ -2,10 +2,10 @@
 BMP File name: imagine_2.bmp 
  heigth: 640 
  length 426 
- dimensiune: 94432810845043 bytes
- user id: 0
- contorul de legatur: 0
- timpul ultimei modificari: Thu Jan  1 02:00:00 1970
- drepturi de acces user: ---
- drepturi de acces grup: ---
- drepturi de acces other: ---
+ dimensiune: 818058 bytes
+ user id: 1000
+ contorul de legatur: 1
+ timpul ultimei modificari: Tue Nov 14 12:40:18 2023
+ drepturi de acces user: rw-
+ drepturi de acces grup: r--
+ drepturi de acces other: r--

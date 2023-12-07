@@ -1,7 +1,7 @@
 
 nume director: director
-identificatorul utilizatorului: 32767
-drepturi de acces user: r-x
- drepturi de acces grup: ---
- drepturi de acces other: rwx
+identificatorul utilizatorului: 1000
+drepturi de acces user: rwx
+ drepturi de acces grup: r-x
+ drepturi de acces other: r-x
 
