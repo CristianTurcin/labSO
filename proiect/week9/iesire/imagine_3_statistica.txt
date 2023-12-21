@@ -1,0 +1,11 @@
+
+BMP File name: imagine_3.bmp 
+ heigth: 256 
+ length 256 
+ dimensiune: 196666 bytes
+ user id: 1000
+ contorul de legatur: 1
+ timpul ultimei modificari: Tue Nov 14 12:40:23 2023
+ drepturi de acces user: rw-
+ drepturi de acces grup: r--
+ drepturi de acces other: r--

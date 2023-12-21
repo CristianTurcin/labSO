@@ -1,0 +1,11 @@
+
+BMP File name: imagine_4.bmp 
+ heigth: 762 
+ length 1309 
+ dimensiune: 2995046 bytes
+ user id: 1000
+ contorul de legatur: 1
+ timpul ultimei modificari: Tue Nov 14 12:40:40 2023
+ drepturi de acces user: rw-
+ drepturi de acces grup: r--
+ drepturi de acces other: r--
